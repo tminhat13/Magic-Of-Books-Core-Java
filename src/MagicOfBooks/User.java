@@ -65,19 +65,18 @@ public class User {
 		this.newBooks = newBooks;
 	}
 	
-	public Book getNewBookById(int bookId) {
+	public Book getBookById(int bookId) {
 		try {
-			for(Book book : newBooks) {
+			for(Book book : this.newBooks) {
 				if(book.getBookId()==bookId) {
 					return book;
 				}
 			}
-			System.out.println("Not found!");
 		}
 		catch(Exception e) {
 			System.out.println("Error: " + e.getMessage());
 		}
-		return null;
+		return new Book();
 	}
 
 	public void addNewBook(Book newBook) {
@@ -91,6 +90,14 @@ public class User {
 	public void setFavorite(ArrayList<Book> favorite) {
 		this.favorite = favorite;
 	}
+	
+	public boolean addFavorite(Book book) {
+		if(!this.favorite.contains(book)) {
+			this.favorite.add(book);
+			return false;
+		}
+		return true;
+	}
 
 	public ArrayList<Book> getCompleted() {
 		return completed;
@@ -100,7 +107,15 @@ public class User {
 		this.completed = completed;
 	}
 	
+	public boolean addCompleted(Book book) {
+		if(!this.completed.contains(book)) {
+			this.completed.add(book);
+			return false;
+		}
+		return true;
+	}
+	
 	public String toString() {
-		return "Username: " + this.userName + ", email: " + this.email;
+		return "User: " + this.userName + ", email: " + this.email;
 	}
 }

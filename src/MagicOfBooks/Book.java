@@ -11,14 +11,20 @@ public class Book {
 	private String description;
 	
 	//constructions
-	public Book(){
-		this.bookId = count.incrementAndGet();
-	}
+	public Book(){}
 	
 	public Book(String bookName, String authorName, String description) {
 		super();
-		this.setBookName(bookName);
+		this.bookName = bookName;
 		this.bookId = count.incrementAndGet();
+		this.authorName = authorName;
+		this.description = description;
+	}
+	
+	public Book(int bookId, String bookName, String authorName, String description) {
+		super();
+		this.bookName = bookName;
+		this.bookId = bookId;
 		this.authorName = authorName;
 		this.description = description;
 	}
@@ -55,5 +61,8 @@ public class Book {
 		this.description = description;
 	}
 	
+	public String toString() {
+		return "Book ID: " + this.bookId +", Book Name: " + this.bookName + ", Author: " + this.authorName + ", Description: " + this.description;
+	}
 	
 }
