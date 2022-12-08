@@ -100,5 +100,7 @@ public class User {
 		this.completed = completed;
 	}
 	
-	
+	public String toString() {
+		return "Username: " + this.userName + ", email: " + this.email;
+	}
 }
