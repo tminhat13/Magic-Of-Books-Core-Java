@@ -1,20 +1,24 @@
 package MagicOfBooks;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Book {
 	
-
+	private static final AtomicInteger count = new AtomicInteger(0);
 	private String bookName;
 	private int bookId;
 	private String authorName;
 	private String description;
 	
 	//constructions
-	public Book(){}
+	public Book(){
+		this.bookId = count.incrementAndGet();
+	}
 	
-	public Book(String bookName, int bookId, String authorName, String description) {
+	public Book(String bookName, String authorName, String description) {
 		super();
 		this.setBookName(bookName);
-		this.bookId = bookId;
+		this.bookId = count.incrementAndGet();
 		this.authorName = authorName;
 		this.description = description;
 	}
@@ -31,9 +35,9 @@ public class Book {
 		return bookId;
 	}
 
-	public void setBookId(int bookId) {
-		this.bookId = bookId;
-	}
+//	public void setBookId(int bookId) {
+//		this.bookId = bookId;
+//	}
 
 	public String getAuthorName() {
 		return authorName;

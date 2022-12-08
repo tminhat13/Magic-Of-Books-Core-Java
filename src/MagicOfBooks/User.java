@@ -1,10 +1,12 @@
 package MagicOfBooks;
 
-import java.util.ArrayList;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class User {
+	private static final AtomicInteger count = new AtomicInteger(0);
 	private String userName;
-	private String userId;
+	private int userId;
 	private String email;
 	private String password;
 	private ArrayList<Book> newBooks = new ArrayList<Book>();
@@ -12,11 +14,13 @@ public class User {
 	private ArrayList<Book> completed = new ArrayList<Book>();
 	
 	//Constructor
-	User(){}
+	User(){
+		this.userId = count.incrementAndGet();
+	}
 	
-	User(String userName, String userId, String email, String password){
+	User(String userName, String email, String password){
+		this.userId = count.incrementAndGet();
 		this.setUserName(userName);
-		this.setUserId(userId);
 		this.setEmail(email);
 		this.setPassword(password);
 	}
@@ -29,13 +33,13 @@ public class User {
 		this.userName = userName;
 	}
 
-	public String getUserId() {
+	public int getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+//	public void setUserId(int userId) {
+//		this.userId = userId;
+//	}
 
 	public String getEmail() {
 		return email;
