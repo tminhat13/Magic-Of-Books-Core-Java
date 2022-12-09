@@ -200,7 +200,7 @@ public class MagicOfBooks {
 					return 1;
 				}
 				for(User user: users) {
-					if(email.equals(user.getUserName()) && pass.equals(user.getPassword())) {
+					if(email.equals(user.getEmail()) && pass.equals(user.getPassword())) {
 						currentUser = user;
 						System.out.println("Hi, " + user.getUserName() + "!");
 						return 0;
