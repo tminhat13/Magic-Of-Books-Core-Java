@@ -42,9 +42,9 @@ The book class should have following attributes:
 6. Zero marks will be awarded if the code throws compile time error. Partial marking will be done only if the code has no compile time error
 
 ## Output
-![](Output1.png)
-![](Output2.png)
-![](Output3.png)
-![](Output4.png)
-![](Output5.png)
-![](Output6.png)
+![](Output1.PNG)
+![](Output2.PNG)
+![](Output3.PNG)
+![](Output4.PNG)
+![](Output5.PNG)
+![](Output6.PNG)
