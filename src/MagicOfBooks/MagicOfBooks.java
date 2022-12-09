@@ -12,7 +12,7 @@ public class MagicOfBooks {
 	public static int start() {
 		while(currentUser.getUserName()==null) {
 			try {
-				System.out.println("---------Options---------");
+				System.out.println("---------Welcome to Magic of Books---------");
 				System.out.println("1. New User");
 				System.out.println("2. Sign In");
 				System.out.println("3. Close App");
@@ -37,7 +37,6 @@ public class MagicOfBooks {
 				System.out.println(e.getMessage());
 			}
 		}
-		//System.out.println("===========" + currentUser + "==============");
 		return 1;
 	}
 	
