@@ -31,22 +31,22 @@ The book class should have following attributes:
 | author | String  | store the name of the author |
 | description | String  | Book's description |
 
-+----------+-------------+------+-----+---------+-------+
+
 | Field    | Type        | Null | Key | Default | Extra |
-+----------+-------------+------+-----+---------+-------+
+
 | username | varchar(30) | NO   | PRI | NULL    |       |
 | email    | varchar(30) | YES  |     | NULL    |       |
 | password | varchar(30) | YES  |     | NULL    |       |
-+----------+-------------+------+-----+---------+-------+
 
-+-------------+--------------+------+-----+---------+----------------+
+
+
 | Field       | Type         | Null | Key | Default | Extra          |
-+-------------+--------------+------+-----+---------+----------------+
+
 | bookid      | int          | NO   | PRI | NULL    | auto_increment |
 | bookname    | varchar(30)  | YES  |     | NULL    |                |
 | author      | varchar(30)  | YES  |     | NULL    |                |
 | description | varchar(255) | YES  |     | NULL    |                |
-+-------------+--------------+------+-----+---------+----------------+
+
 
 favorite table
 +----------+-------------+------+-----+---------+----------------+
@@ -59,10 +59,11 @@ favorite table
 
 completed table
 
-| Field    | Type        | Null | Key | Default | Extra          |
-| no       | int         | NO   | PRI | NULL    | auto_increment |
-| username | varchar(30) | NO   | MUL | NULL    |                |
-| bookid   | int         | NO   | MUL | NULL    |                |
+| Field | Type | Null | Key | Default | Extra |
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| no | int | NO | PRI | NULL | auto_increment |
+| username | varchar(30) | NO   | MUL | NULL |  |
+| bookid   | int | NO | MUL | NULL |  |
  
 2. Use Arrays to store books information in user class.
 3. Create book and User as a pojo.
