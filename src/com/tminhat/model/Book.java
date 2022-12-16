@@ -1,10 +1,7 @@
-package MagicOfBooks;
-
-import java.util.concurrent.atomic.AtomicInteger;
+package com.tminhat.model;
 
 public class Book {
 	
-	private static final AtomicInteger count = new AtomicInteger(0);
 	private String bookName;
 	private int bookId;
 	private String authorName;
@@ -12,14 +9,6 @@ public class Book {
 	
 	//constructions
 	public Book(){}
-	
-	public Book(String bookName, String authorName, String description) {
-		super();
-		this.bookName = bookName;
-		this.bookId = count.incrementAndGet();
-		this.authorName = authorName;
-		this.description = description;
-	}
 	
 	public Book(int bookId, String bookName, String authorName, String description) {
 		super();
@@ -41,9 +30,9 @@ public class Book {
 		return bookId;
 	}
 
-//	public void setBookId(int bookId) {
-//		this.bookId = bookId;
-//	}
+	public void setBookId(int bookId) {
+		this.bookId = bookId;
+	}
 
 	public String getAuthorName() {
 		return authorName;

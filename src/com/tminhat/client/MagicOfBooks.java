@@ -1,13 +1,22 @@
-package MagicOfBooks;
+package com.tminhat.client;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import com.tminhat.connect.DataConnect;
+import com.tminhat.model.Book;
+import com.tminhat.model.User;
+import com.tminhat.service.BookService;
+import com.tminhat.service.UserService;
 
 public class MagicOfBooks {
 	static Scanner scan = new Scanner(System.in);
 	static ArrayList<User> users = new ArrayList<User>();
 	static User currentUser = new User();
-	
+	static UserService uservice = new UserService();
+	static BookService bservice = new BookService();
+	static Connection con = DataConnect.getConnect();
 	
 	public static int start() {
 		while(currentUser.getUserName()==null) {
@@ -21,13 +30,14 @@ public class MagicOfBooks {
 				scan.nextLine();
 				switch(input) {
 				case 1:
-					createNewUser();
+					currentUser = uservice.createNewUser();
 					break;
 				case 2:
-					signIn();
+					currentUser = uservice.signIn();
 					break;
 				case 3:
-					return 0;
+					System.exit(0);
+					break;
 				default:
 					System.out.println("Invalid number!");
 					break;
@@ -46,7 +56,7 @@ public class MagicOfBooks {
 			try {
 				System.out.println("---------------------------------------------");
 				System.out.println("---------User: " + currentUser.getUserName() + ", Total of Books:" +
-						currentUser.getNewBooks().size()+ "---------");
+						 "---------");
 				System.out.println("---------Reading Book: " + 
 						(currentBook.getBookName()!=null?currentBook.getBookName():"No book selected") + "---------");
 				System.out.println("---------------------------------------------");
@@ -66,24 +76,16 @@ public class MagicOfBooks {
 				switch(input) {
 				case 1:
 					currentUser = new User();
-					//System.out.println(currentUser);
 					return 1;
 				case 2:
-					String name, auth, desc;
-					System.out.println("Enter book name: ");
-					name = scan.nextLine();
-					System.out.println("Enter author name: ");
-					auth = scan.nextLine();
-					System.out.println("Enter description: ");
-					desc = scan.nextLine();
-					currentUser.addNewBook(new Book(name, auth, desc));
+					bservice.addNewBook();
 					break;
 				case 3:
-					currentUser.getNewBooks().forEach((book)->System.out.println(book));
+					bservice.getNewBooks().forEach((book)->System.out.println(book));
 					break;
 				case 4:
 					if(currentBook.getBookId()!=0) {
-						if(!currentUser.addFavorite(currentBook))
+						if(!bservice.addFavorite(currentUser.getUserName(), currentBook.getBookId()))
 							System.out.println("Add to favorite successfully!");
 						else
 							System.out.println("The book was already added!");
@@ -92,12 +94,12 @@ public class MagicOfBooks {
 						System.out.println("No book selected!");
 					break;
 				case 5:
-					currentUser.getFavorite().forEach((book)->System.out.println(book));
+					bservice.getFavBooks(currentUser.getUserName()).forEach((book)->System.out.println(book));
 					break;
 				case 6:
 					if(currentBook.getBookId()!=0) {
-						if(!currentUser.addCompleted(currentBook))
-							System.out.println("Added to completed list successfully!");
+						if(!bservice.addCompleted(currentUser.getUserName(), currentBook.getBookId()))
+							System.out.println("Add to favorite successfully!");
 						else
 							System.out.println("The book was already added!");
 					}
@@ -105,13 +107,13 @@ public class MagicOfBooks {
 						System.out.println("No book selected!");
 					break;
 				case 7:
-					currentUser.getCompleted().forEach((book)->System.out.println(book));
+					bservice.getCompletedBooks(currentUser.getUserName()).forEach((book)->System.out.println(book));
 					break;
 				case 8:
 					int bookId;
 					System.out.println("Enter book Id: ");
 					bookId = scan.nextInt();
-					currentBook = currentUser.getBookById(bookId);
+					currentBook = bservice.getBookById(bookId);
 					if(currentBook.getBookId()!=0) {
 						System.out.println("Selected Book: " + currentBook.getBookName());
 					}
@@ -138,87 +140,10 @@ public class MagicOfBooks {
 		}
 	}
 	
-	public static int createNewUser() {
-		String name, email, pass;
-		while(true) {
-			try {
-				boolean usedEmail = false;
-				System.out.println("--------Sign Up-------");
-				System.out.println("Enter cancel anytime to go back to the prompt screen");
-				System.out.println("Enter Your Name: ");
-				name = scan.nextLine();
-				if(name.equals("cancel")) {
-					return 1;
-				}
-				System.out.println("Enter Email: ");
-				email = scan.nextLine();
-				if(email.equals("cancel")) {
-					return 1;
-				}
-				System.out.println("Enter Password: ");
-				pass = scan.nextLine();
-				if(pass.equals("cancel")) {
-					return 1;
-				}
-				for(User user: users) {
-					if(email.equals(user.getEmail())) {
-						System.out.println("Email has been used!");
-						usedEmail = true;
-						break;
-					}
-				}
-				if(!usedEmail) {
-				currentUser.setUserName(name);
-				currentUser.setEmail(email);
-				currentUser.setPassword(pass);
-				users.add(currentUser);
-				System.out.println("User has been created successfully!");
-				return 0;
-				}
-			}
-			catch (Exception e) {
-				System.out.println("Error: " + e.getMessage());
-			}
-		}
-		
-	}
 	
-	public static int signIn() {
-		String email, pass;
-		while(true) {
-			try {
-				System.out.println("--------Sign In-------");
-				System.out.println("Enter cancel anytime to go back to the prompt screen");
-				System.out.println("Enter email: ");
-				email = scan.nextLine();
-				if(email.equals("cancel")) {
-					return 1;
-				}
-				System.out.println("Enter password: ");
-				pass = scan.nextLine();
-				if(pass.equals("cancel")) {
-					return 1;
-				}
-				for(User user: users) {
-					if(email.equals(user.getEmail()) && pass.equals(user.getPassword())) {
-						currentUser = user;
-						System.out.println("Hi, " + user.getUserName() + "!");
-						return 0;
-					}
-				}
-				System.out.println("Invalid username or password!");
-			}
-			catch (Exception e) {
-				System.out.println("Error: " + e.getMessage());
-			}
-		}
-	}
+	
 	
 	public static void main(String[] args) {
-		
-		
-//		Book book1 = new Book("Cracking the Coding Interview", "Gayle Laakmann McDowell", "150 programming questions and descriptions");
-//		Book book2 = new Book("12 day Body Shaping Miracle", "Michael Thurmond", "#1 Diet and Fitness Makeover");
 		while(true) {
 			if(start()==1) {
 				if(userMenu()==0) {

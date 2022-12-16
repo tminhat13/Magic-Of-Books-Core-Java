@@ -6,4 +6,5 @@
  *
  */
 module MagicOfBooks {
+	requires java.sql;
 }
