@@ -53,7 +53,7 @@ ALTER TABLE favorites ADD UNIQUE KEY uk_userbook (username, bookid);
 
 ALTER TABLE completed ADD UNIQUE KEY uk_userbook (username, bookid);
 
-
+![](Database Diagram.PNG)
 
 
 | Field    | Type        | Null | Key | Default | Extra |
